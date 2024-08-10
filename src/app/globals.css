@@ -19,3 +19,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.observe {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}

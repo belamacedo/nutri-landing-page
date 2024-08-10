@@ -1,5 +1,5 @@
-'use client'
-
+// components/Services.tsx
+import useScrollReveal from '@/app/hooks/useScrollReveal';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -28,6 +28,16 @@ export const Services = () => {
   // Inicializa o estado com o ID do primeiro serviço
   const [activeService, setActiveService] = useState<number>(servicesData[0].id);
 
+  // Hook para aplicar animação de scroll
+  const addToRefs = useScrollReveal({
+    origin: 'top',
+    distance: '30px',
+    duration: 1000,
+    easing: 'ease',
+    interval: 200,
+    reset: true,
+  });
+
   const handleClick = (id: number) => {
     if (activeService !== id) {
       setActiveService(id);
@@ -37,7 +47,12 @@ export const Services = () => {
   return (
     <section id="services" className="py-20 bg-amber-200">
       <div className="container mx-auto p-4 md:p-6 flex flex-col items-start">
-        <h2 className="text-3xl font-bold mb-6 text-amber-700 text-center">Serviços</h2>
+        <h2
+          className="text-3xl font-bold mb-6 text-amber-700 text-center"
+          ref={addToRefs} // Aplicar animação ao título
+        >
+          Serviços
+        </h2>
         <div className="flex flex-wrap gap-6">
           {/* Cards Container */}
           <div className="flex-1 flex flex-col gap-6">
@@ -48,6 +63,7 @@ export const Services = () => {
                   activeService === service.id ? 'border-2 border-amber-500' : ''
                 }`}
                 onClick={() => handleClick(service.id)}
+                ref={addToRefs} // Aplicar animação aos cartões
               >
                 <div className="mb-4 flex justify-center">
                   <Image
@@ -58,14 +74,16 @@ export const Services = () => {
                     className="text-amber-700"
                   />
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-center">{service.title}</h3>
+                <h3 className="text-lg font-semibold text-center">
+                  {service.title}
+                </h3>
               </div>
             ))}
           </div>
           {/* Descriptions Container */}
           <div className="flex-1 pl-6 flex items-center justify-center">
             {activeService && (
-              <div className="p-4 text-center">
+              <div className="p-4 text-center" ref={addToRefs}>
                 <h3 className="text-lg font-semibold mb-2">
                   {servicesData.find(service => service.id === activeService)?.title}
                 </h3>
